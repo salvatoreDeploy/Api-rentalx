@@ -1,3 +1,4 @@
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalRepository } from "@modules/rentals/repositories/IRentalRepository";
 import { IDateProvider } from "@shared/container/provider/IDateProvider";
@@ -16,7 +17,9 @@ class CreateRentalUseCase {
     @inject("RentalRepository")
     private rentalsRepository: IRentalRepository,
     @inject("DayjsDateProvider")
-    private dayDateProvider: IDateProvider
+    private dayDateProvider: IDateProvider,
+    @inject("CarsRepository")
+    private carsRepositiory: ICarsRepository
   ) {}
 
   async execute({
@@ -60,6 +63,8 @@ class CreateRentalUseCase {
       car_id,
       expected_return_date,
     });
+
+    await this.carsRepositiory.updateAvailable(car_id, false);
 
     return rental;
   }
