@@ -3,13 +3,14 @@ import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalRepository } from "@modules/rentals/repositories/IRentalRepository";
 import { IDateProvider } from "@shared/container/provider/IDateProvider";
 import { AppError } from "@shared/error/AppError";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 interface IRequest {
   id: string;
   user_id: string;
 }
 
+@injectable()
 class DevolutionRentalUsecase {
   constructor(
     @inject("RentalRepository")
@@ -22,8 +23,10 @@ class DevolutionRentalUsecase {
 
   async execute({ id, user_id }: IRequest): Promise<Rental> {
     const minimum_daily = 1;
-    const car = await this.carsRepository.findById(id);
+
     const rental = await this.rentalRepository.findById(id);
+
+    const car = await this.carsRepository.findById(rental.car_id);
 
     if (!rental) {
       throw new AppError("Rental does not exists");
@@ -65,10 +68,10 @@ class DevolutionRentalUsecase {
     rental.total = total;
     //end
 
-    //Persistencia no Bancom
+    //Persistencia no Banco
     await this.rentalRepository.create(rental);
 
-    await this.carsRepository.updateAvailable(car.id, false);
+    await this.carsRepository.updateAvailable(car.id, true);
 
     //end
 
