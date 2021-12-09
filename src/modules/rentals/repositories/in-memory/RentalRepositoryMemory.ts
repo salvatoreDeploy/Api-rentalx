@@ -1,5 +1,6 @@
 import { ICreateRentalDTO } from "@modules/rentals/infra/dtos/ICreateRentalDTO";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
+import { rentalRoutes } from "@shared/infra/http/routes/rental.routes";
 import { IRentalRepository } from "../IRentalRepository";
 
 class RentalRepositoryMemory implements IRentalRepository {
@@ -29,10 +30,19 @@ class RentalRepositoryMemory implements IRentalRepository {
       (rental) => rental.car_id === car_id && !rental.end_date
     );
   }
+
   async findOpenRentalByUser(user_id: string): Promise<Rental> {
     return this.rentals.find(
       (rental) => rental.user_id === user_id && !rental.end_date
     );
+  }
+
+  async findById(id: string): Promise<Rental> {
+    return this.rentals.find((rental) => rental.id === id);
+  }
+
+  async findByUserId(user_id: string): Promise<Rental[]> {
+    return this.rentals.filter((rental) => rental.user_id === user_id);
   }
 }
 
