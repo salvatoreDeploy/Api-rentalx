@@ -3,44 +3,58 @@ import { verify } from "jsonwebtoken";
 
 import { UserRepository } from "@modules/accounts/infra/typeorm/repositories/UserRepository";
 import { AppError } from "@shared/error/AppError";
+import { UserTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UserTokensRepository";
+
+import auth from "@config/auth";
 
 interface IPayload {
-    sub: string;
+  sub: string;
 }
 
 export async function ensureAuthenticate(
-    request: Request,
-    response: Response,
-    next: NextFunction
+  request: Request,
+  response: Response,
+  next: NextFunction
 ): Promise<void> {
-    const authHeader = request.headers.authorization;
+  const authHeader = request.headers.authorization;
+  const userTokenRepository = new UserTokensRepository();
 
-    if (!authHeader) {
-        throw new AppError("Token missing", 401);
+  if (!authHeader) {
+    throw new AppError("Token missing", 401);
+  }
+
+  const [, token] = authHeader.split(" ");
+
+  try {
+    const { sub: user_id } = verify(
+      token,
+      //secret token
+      //"9fe0705645e14a88678b58f35cd984bb"
+
+      //secret refresh token
+      auth.secret_refresh_token
+    ) as IPayload;
+
+    /* console.log(sub); */
+    //const userRepository = new UserRepository();
+
+    //const user = await userRepository.findById(user_id);
+
+    const user = await userTokenRepository.findByUserIdAndRefreshToken(
+      user_id,
+      token
+    );
+
+    if (!user) {
+      throw new AppError("User does not exists", 401);
     }
 
-    const [, token] = authHeader.split(" ");
+    request.user = {
+      id: user_id,
+    };
 
-    try {
-        const { sub: user_id } = verify(
-            token,
-            "9fe0705645e14a88678b58f35cd984bb"
-        ) as IPayload;
-        /* console.log(sub); */
-        const userRepository = new UserRepository();
-
-        const user = await userRepository.findById(user_id);
-
-        if (!user) {
-            throw new AppError("User does not exists", 401);
-        }
-
-        request.user = {
-            id: user_id,
-        };
-
-        next();
-    } catch {
-        throw new AppError("Invalid token!", 401);
-    }
+    next();
+  } catch {
+    throw new AppError("Invalid token!", 401);
+  }
 }
