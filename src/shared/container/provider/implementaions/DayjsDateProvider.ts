@@ -28,6 +28,10 @@ class DayjsDateProvider implements IDateProvider {
     const start_date_utc = this.convertToUtc(start_date);
     return dayjs(end_date_utc).diff(start_date_utc, "days");
   }
+
+  addHours(hours: number): Date {
+    return dayjs().add(hours, "hour").toDate();
+  }
 }
 
 export { DayjsDateProvider };

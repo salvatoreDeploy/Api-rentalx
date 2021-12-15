@@ -83,4 +83,17 @@ multa proporcional aos dias de atrasos
 **Requisitos não Funcionais**
 
 **Regras de Negócio**
-[x] Usuario deve estar logado
+[x] Usuario deve estar logado na aplicação
+
+# Recuperar Senha
+
+**Requisitos Funcionais**
+[] Deve ser possivel o usuario recuperar a senha informando o e-mail
+[] O usuario deve receber um e-mail com o passo a passo para recuperação da senha
+[] O usuario deve conseguir inserir uma nova senha
+
+**Requisitos não Funcionais**
+
+**Regras de Negócio**
+[] O usuario precisa informar uma nova senha
+[] O link enviado para recuperação deve expirar em 3 horas
