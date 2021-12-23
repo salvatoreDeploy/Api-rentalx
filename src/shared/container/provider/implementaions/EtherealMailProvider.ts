@@ -7,23 +7,27 @@ import fs from "fs";
 @injectable()
 class EtherealMailProvider implements IMailProvider {
   private client: Transporter;
-  constructor() {
-    nodemailer
-      .createTestAccount()
-      .then((account) => {
-        const transporter = nodemailer.createTransport({
-          host: account.smtp.host,
-          port: account.smtp.port,
-          secure: account.smtp.secure,
-          auth: {
-            user: account.user,
-            pass: account.pass,
-          },
-        });
 
-        this.client = transporter;
-      })
-      .catch((err) => console.log(err));
+  private async createClient() {
+    try {
+      const account = await nodemailer.createTestAccount();
+
+      this.client = nodemailer.createTransport({
+        host: account.smtp.host,
+        port: account.smtp.port,
+        secure: account.smtp.secure,
+        auth: {
+          user: account.user,
+          pass: account.pass,
+        },
+      });
+    } catch (err) {
+      console.error(`EtherealMailProvider - Error:\n${err}`);
+    }
+  }
+
+  constructor() {
+    this.createClient();
   }
 
   async sendMail(
@@ -40,6 +44,10 @@ class EtherealMailProvider implements IMailProvider {
 
     //Contante que capituras os dados das variaveis
     const templateHtml = templateParse(variables);
+
+    if (!this.client) {
+      await this.createClient();
+    }
 
     //Constante que recebe toda estrutura para montar e enviar o email
     const message = await this.client.sendMail({
