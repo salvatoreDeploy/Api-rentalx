@@ -12,35 +12,35 @@ import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
 
 const carsRoutes = Router();
 
-const uploadImageCars = multer(uploadConfig.upload("./tmp/cars"));
+const uploadImageCars = multer(uploadConfig);
 
 const createCarController = new CreateCarController();
 const listAvaliableController = new ListAvaliableController();
 const createCarsSpecificationController =
-    new CreateCarSpecificationController();
+  new CreateCarSpecificationController();
 const uploadCarImageController = new UploadCarImageController();
 
 carsRoutes.post(
-    "/",
-    ensureAuthenticate,
-    ensureAdmin,
-    createCarController.handle
+  "/",
+  ensureAuthenticate,
+  ensureAdmin,
+  createCarController.handle
 );
 
 carsRoutes.get("/avaliable", listAvaliableController.handle);
 carsRoutes.post(
-    "/specifications/:id",
-    ensureAuthenticate,
-    ensureAdmin,
-    createCarsSpecificationController.handle
+  "/specifications/:id",
+  ensureAuthenticate,
+  ensureAdmin,
+  createCarsSpecificationController.handle
 );
 
 carsRoutes.post(
-    "/images/:id",
-    ensureAuthenticate,
-    ensureAdmin,
-    uploadImageCars.array("images"),
-    uploadCarImageController.handle
+  "/images/:id",
+  ensureAuthenticate,
+  ensureAdmin,
+  uploadImageCars.array("images"),
+  uploadCarImageController.handle
 );
 
 export { carsRoutes };
