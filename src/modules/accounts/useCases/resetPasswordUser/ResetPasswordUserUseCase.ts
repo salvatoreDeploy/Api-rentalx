@@ -1,6 +1,6 @@
 import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { IUserTokensRepository } from "@modules/accounts/repositories/IUserTokensRepository";
-import { IDateProvider } from "@shared/container/provider/IDateProvider";
+import { IDateProvider } from "@shared/container/provider/DateProvider/IDateProvider";
 import { AppError } from "@shared/error/AppError";
 import { inject, injectable } from "tsyringe";
 import { hash } from "bcrypt";

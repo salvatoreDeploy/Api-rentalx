@@ -1,7 +1,7 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalRepository } from "@modules/rentals/repositories/IRentalRepository";
-import { IDateProvider } from "@shared/container/provider/IDateProvider";
+import { IDateProvider } from "@shared/container/provider/DateProvider/IDateProvider";
 import { AppError } from "@shared/error/AppError";
 import { inject, injectable } from "tsyringe";
 

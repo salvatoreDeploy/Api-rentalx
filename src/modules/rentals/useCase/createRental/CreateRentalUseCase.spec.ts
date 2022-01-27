@@ -2,9 +2,10 @@ import { RentalRepositoryMemory } from "@modules/rentals/repositories/in-memory/
 import { AppError } from "@shared/error/AppError";
 import { CreateRentalUseCase } from "./CreateRentalUseCase";
 import dayjs from "dayjs";
-import { DayjsDateProvider } from "@shared/container/provider/implementaions/DayjsDateProvider";
+
 import { CarsRepository } from "@modules/cars/infra/typeorm/repositories/CarsRepository";
 import { CarsRepositoryMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryMemory";
+import { DayjsDateProvider } from "@shared/container/provider/DateProvider/implementations/DayjsDateProvider";
 
 let createRentalUseCase: CreateRentalUseCase;
 let rentalRepositoryMemory: RentalRepositoryMemory;

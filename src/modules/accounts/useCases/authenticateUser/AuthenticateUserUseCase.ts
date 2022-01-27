@@ -6,7 +6,7 @@ import { IUserRepository } from "@modules/accounts/repositories/IUserRepository"
 import { AppError } from "@shared/error/AppError";
 import { IUserTokensRepository } from "@modules/accounts/repositories/IUserTokensRepository";
 import auth from "@config/auth";
-import { IDateProvider } from "@shared/container/provider/IDateProvider";
+import { IDateProvider } from "@shared/container/provider/DateProvider/IDateProvider";
 
 interface IRequest {
   email: string;

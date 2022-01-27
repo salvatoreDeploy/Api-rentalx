@@ -1,12 +1,13 @@
 import { IUserRepository } from "@modules/accounts/repositories/IUserRepository";
 import { IUserTokensRepository } from "@modules/accounts/repositories/IUserTokensRepository";
-import { IDateProvider } from "@shared/container/provider/IDateProvider";
-import { IMailProvider } from "@shared/container/provider/IMailProvider";
+
 import { AppError } from "@shared/error/AppError";
 import { inject, injectable } from "tsyringe";
 import { resolve } from "path";
 
 import { v4 as uuidV4 } from "uuid";
+import { IDateProvider } from "@shared/container/provider/DateProvider/IDateProvider";
+import { IMailProvider } from "@shared/container/provider/MailProvider/IMailProvider";
 
 @injectable()
 class SendForgotPasswordMailUseCase {
@@ -17,7 +18,7 @@ class SendForgotPasswordMailUseCase {
     private userTokensRepository: IUserTokensRepository,
     @inject("DayjsDateProvider")
     private dayjsDateProvider: IDateProvider,
-    @inject("EtherealMailProvider")
+    @inject("MailProvider")
     private etherealMailProvider: IMailProvider
   ) {}
   async execute(email: string) {
