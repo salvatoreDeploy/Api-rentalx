@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, TableColumn } from "typeorm";
+/* import { MigrationInterface, QueryRunner, TableColumn } from "typeorm";
 
 export class AlterUserDeleteUsername1635891885851
   implements MigrationInterface
@@ -16,4 +16,4 @@ export class AlterUserDeleteUsername1635891885851
       })
     );
   }
-}
+} */
