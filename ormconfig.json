@@ -6,7 +6,7 @@
     "password": "ignite",
     "database": "rentalx",
     "migrations": ["./dist/shared/infra/typeorm/migrations/*.js"],
-    "entities": ["./dist/modules/cars/infra/typeorm/entities/*.js", "./dist/modules/accounts/infra/typeorm/entities/*.js", 
+    "entities": ["./dist/modules/cars/infra/typeorm/entities/*.js", "./src/modules/accounts/infra/typeorm/entities/*.js", 
         "./dist/modules/rentals/infra/typeorm/entities/*.js"],
     "cli":{
         "migrationsDir": "./dist/shared/infra/typeorm/migrations"

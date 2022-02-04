@@ -10,12 +10,15 @@ import createConnection from "@shared/infra/typeorm";
 
 import swaggerFile from "../../../swagger.json";
 import { routes } from "./routes";
+import rateLimiter from "./middlewares/rateLimiter";
 import upload from "@config/upload";
 import cors from "cors";
 
 createConnection();
 
 const app = express();
+
+app.use(rateLimiter);
 
 app.use(express.json());
 

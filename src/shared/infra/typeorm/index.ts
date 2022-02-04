@@ -12,7 +12,7 @@ getConnectionOptions().then((options) => {
     });
 }); */
 
-/* export default async (host = "localhost"): Promise<Connection> => {
+export default async (host = "localhost"): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
   return createConnection(
@@ -24,9 +24,9 @@ getConnectionOptions().then((options) => {
           : defaultOptions.database,
     })
   );
-}; */
+};
 
-export default async (): Promise<Connection> => {
+/* export default async (): Promise<Connection> => {
   const defaultOptions = await getConnectionOptions();
 
   return createConnection(
@@ -37,4 +37,4 @@ export default async (): Promise<Connection> => {
           : defaultOptions.database,
     })
   );
-};
+}; */
