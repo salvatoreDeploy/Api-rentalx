@@ -4,6 +4,7 @@ import { ProfileUserController } from "@modules/accounts/useCases/profileUser/Pr
 import { UpdateUserAvatarController } from "@modules/accounts/useCases/updateUserAvatar/UpdateUserAvatarController";
 import { Router } from "express";
 import multer from "multer";
+import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticate } from "../middlewares/ensureAuthenticate";
 
 const userRoutes = Router();
@@ -23,6 +24,11 @@ userRoutes.patch(
   updateUserAvatarController.handle
 );
 
-userRoutes.get("/profile", ensureAuthenticate, profileUserController.handle);
+userRoutes.get(
+  "/profile",
+  ensureAuthenticate,
+  ensureAdmin,
+  profileUserController.handle
+);
 
 export { userRoutes };
